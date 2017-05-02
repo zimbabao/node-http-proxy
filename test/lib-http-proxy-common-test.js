@@ -357,6 +357,16 @@ describe('lib/http-proxy/common.js', function () {
       expect(outgoing.path).to.be('');
     });
 
+    // url.parse('').path => null
+    it('should replace all http:/ and https:/ in #urlJoin', function(){
+      var outgoing = {};
+      var testUrl = '/projectr/?url=https://www.abc.com&td_url=https://redirects.tds.com/index.php&_td_deeplink=https://www.ms.com;'
+      common.setupOutgoing(outgoing, {target:
+        { path: testUrl }
+      }, { url : '' });
+
+      expect(outgoing.path).to.be(testUrl);
+    });
   });
 
   describe('#setupSocket', function () {
